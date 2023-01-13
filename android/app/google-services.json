@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "368034776080",
+    "project_id": "okyuin-akiba",
+    "storage_bucket": "okyuin-akiba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368034776080:android:9f88776e35475a0f413695",
+        "android_client_info": {
+          "package_name": "com.matchingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368034776080-ppq8t3khv2drn2sbdq6daau5th4r64l5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.matchingapp",
+            "certificate_hash": "bfbf616de2b3fc128ca0cb3bd563fc2a7cc63272"
+          }
+        },
+        {
+          "client_id": "368034776080-c5csoabrdjs8nqs6f8a95qkacpe1tk1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASm949Wn1yPi9FAP63tJyIldlgJrWACYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368034776080-c5csoabrdjs8nqs6f8a95qkacpe1tk1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
