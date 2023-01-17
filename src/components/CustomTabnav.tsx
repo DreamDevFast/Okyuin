@@ -91,20 +91,8 @@ const CustomTabnav = ({children, navigation, route, ...props}: any) => {
                     size={50}
                     onPress={handleDropdownItem(Relation.dislike)}
                   />
-                  {/* <IconButton
-                    icon="times"
-                    color={Colors.white}
-                    size={25}
-                    onPress={handleDropdownItem(Relation.dislike)}
-                  /> */}
                 </View>
                 <View marginT-10 style={styles.favorite}>
-                  {/* <IconButton
-                    icon="star"
-                    color={Colors.white}
-                    size={25}
-                    onPress={handleDropdownItem(Relation.favorite)}
-                  /> */}
                   <CustomIconButton
                     imageSource={favoriteIcon}
                     size={50}
@@ -112,12 +100,6 @@ const CustomTabnav = ({children, navigation, route, ...props}: any) => {
                   />
                 </View>
                 <View marginT-10 style={styles.like}>
-                  {/* <IconButton
-                    icon="heart"
-                    color={Colors.white}
-                    size={25}
-                    onPress={handleDropdownItem(Relation.like)}
-                  /> */}
                   <CustomIconButton
                     imageSource={likeIcon}
                     size={50}
@@ -130,6 +112,23 @@ const CustomTabnav = ({children, navigation, route, ...props}: any) => {
             )}
           </View>
         )}
+        <View
+          style={
+            route.name == 'UserLikes'
+              ? {...styles.iconButton, ...styles.highLight}
+              : styles.iconButton
+          }
+        >
+          <IconButton
+            icon="heart"
+            color={route.name == 'UserLikes' ? Colors.redBtn : Colors.white}
+            size={25}
+            onPress={() => {
+              dispatch(setLoading(true));
+              navigation.navigate('UserLikes');
+            }}
+          />
+        </View>
         <View
           style={
             route.name == 'UserChat'

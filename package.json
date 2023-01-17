@@ -34,6 +34,7 @@
     "react-native-element-dropdown": "^2.3.1",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-gifted-chat": "^1.0.4",
+    "react-native-google-pay": "^2.1.0",
     "react-native-image-crop-picker": "^0.38.1",
     "react-native-infinite-scroll": "^1.0.6",
     "react-native-lightbox-v2": "^0.9.0",

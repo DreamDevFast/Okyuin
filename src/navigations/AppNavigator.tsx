@@ -24,6 +24,8 @@ import {
 } from '../screens';
 import AnimationTest from '../screens/AnimationTest';
 import NotificationTest from '../screens/NotificationTest';
+import UserPlan from '../screens/user/Plan.user';
+import UserLikes from '../screens/user/Likes.user';
 
 // import Login from '../screens/auth/Login';
 // import FirstScreen from '../screens/First';
@@ -52,8 +54,11 @@ const AppNavigator = () => {
             <Stack.Screen name="UserDashBoard" component={UserDashBoard} />
             <Stack.Screen name="UserSetting" component={UserSetting} />
             <Stack.Screen name="UserProfile" component={UserProfile} />
+            <Stack.Screen name="UserPlan" component={UserPlan} />
 
             <Stack.Screen name="UserShopDetail" component={UserShopDetail} />
+            <Stack.Screen name="UserLikes" component={UserLikes} />
+
             <Stack.Screen name="UserChat" component={UserChat} />
             <Stack.Screen name="UserChatRoom" component={UserChatRoom} />
             <Stack.Screen name="Help" component={Help} />

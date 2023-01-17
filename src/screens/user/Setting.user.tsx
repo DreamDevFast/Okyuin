@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import axios from 'axios';
 import {Text, View} from 'react-native-ui-lib';
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Image, TouchableHighlight} from 'react-native';
 import RangeSlider from 'rn-range-slider';
 import {
   CodeField,
@@ -40,6 +40,8 @@ import Notch from '../../components/Notch';
 import Label from '../../components/Label';
 
 import Loader from '../../components/Loader';
+
+const logoImage = require('../../assets/images/logo.png');
 
 const CELL_COUNT = 6;
 var emailConfirmCodeBaseURL =
@@ -379,6 +381,11 @@ const UserSetting = ({navigation}: any) => {
     setValue('');
     hideModal();
   };
+
+  const handlePlanClick = (plan: 'platinum' | 'gold') => () => {
+    navigation.navigate('UserPlan', {plan});
+  };
+
   console.log('email', email);
   return (
     <Container centerH>
@@ -404,20 +411,54 @@ const UserSetting = ({navigation}: any) => {
             <></>
           )}
           {tempUser.role === 'shop' ? (
-            <View style={styles.block}>
-              <Text color={Colors.subLabel}>無制限のいいねとチャット</Text>
-              <View centerV right style={styles.part} marginB-10 marginT-10>
-                <TextInput
-                  style={styles.input}
-                  selectionColor={Colors.black}
-                  underlineColor={'#ffffff'}
-                  activeUnderlineColor={'#ffffff'}
-                  theme={{colors: {text: Colors.dark}}}
-                  value={unlimitedLikesAndChat}
-                  onChangeText={handleSettingValue('unlimitedLikesAndChat')}
-                />
+            <>
+              <TouchableHighlight onPressOut={handlePlanClick('platinum')}>
+                <View style={styles.block}>
+                  <View centerH marginB-10 style={styles.planContainer}>
+                    <View row centerV>
+                      <Image source={logoImage} style={styles.logoImage} />
+                      <Text style={styles.appName}>おきゅいん</Text>
+                      <Text style={styles.platinum}>PLATINUM</Text>
+                    </View>
+                    <View>
+                      <Text style={{textAlign: 'center'}}>
+                        優先LIKEを送ったり、自分をLIKEした人を確認したり、便利な機能がたくさん！
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight onPressOut={handlePlanClick('gold')}>
+                <View style={styles.block}>
+                  <View centerH marginB-10 style={styles.planContainer}>
+                    <View row centerV>
+                      <Image source={logoImage} style={styles.logoImage} />
+                      <Text style={styles.appName}>おきゅいん</Text>
+                      <Text style={styles.gold}>GOLD</Text>
+                    </View>
+                    <View>
+                      <Text style={{textAlign: 'center'}}>
+                        優先LIKEを送ったり、自分をLIKEした人を確認したり、便利な機能がたくさん！
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </TouchableHighlight>
+              <View style={styles.block}>
+                <Text color={Colors.subLabel}>無制限のいいねとチャット</Text>
+                <View centerV right style={styles.part} marginB-10 marginT-10>
+                  <TextInput
+                    style={styles.input}
+                    selectionColor={Colors.black}
+                    underlineColor={'#ffffff'}
+                    activeUnderlineColor={'#ffffff'}
+                    theme={{colors: {text: Colors.dark}}}
+                    value={unlimitedLikesAndChat}
+                    onChangeText={handleSettingValue('unlimitedLikesAndChat')}
+                  />
+                </View>
               </View>
-            </View>
+            </>
           ) : (
             <></>
           )}
@@ -658,6 +699,35 @@ const styles = StyleSheet.create({
   },
   block: {
     width: '80%',
+  },
+  planContainer: {
+    backgroundColor: Colors.white,
+    padding: 10,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  logoImage: {
+    width: 20,
+    height: 20,
+  },
+  appName: {
+    marginLeft: 5,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  platinum: {
+    backgroundColor: Colors.grey1,
+    color: Colors.white,
+    borderRadius: 5,
+    fontSize: 10,
+    padding: 2,
+  },
+  gold: {
+    backgroundColor: Colors.yellow10,
+    color: Colors.white,
+    borderRadius: 5,
+    fontSize: 10,
+    padding: 2,
   },
   part: {
     backgroundColor: Colors.white,
