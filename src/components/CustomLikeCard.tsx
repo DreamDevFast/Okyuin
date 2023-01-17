@@ -66,7 +66,11 @@ const CustomeLikeCard = ({
           }
         });
 
-        handleLikeCard();
+        if (gestureState.dx > 0) {
+          handleLikeCard('like');
+        } else {
+          handleLikeCard('dislike');
+        }
         Animated.spring(pan, {
           toValue: {
             x: 0,

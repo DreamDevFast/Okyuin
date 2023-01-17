@@ -57,6 +57,8 @@ const UserLikes = ({navigation, route}: any) => {
                     .get();
                   result.push({
                     id: userSnapshot.id,
+                    relationId: relations1[i].id,
+                    relationToUpdate: 'relation1',
                     data: userSnapshot.data(),
                   });
                 } catch (err) {
@@ -71,6 +73,8 @@ const UserLikes = ({navigation, route}: any) => {
                     .get();
                   result.push({
                     id: userSnapshot.id,
+                    relationId: relations2[i].id,
+                    relationToUpdate: 'relation2',
                     data: userSnapshot.data(),
                   });
                 } catch (err) {
@@ -78,17 +82,32 @@ const UserLikes = ({navigation, route}: any) => {
                 }
               }
 
-              setTargetUsers([result[0], result[0], result[0], result[0]]);
+              setTargetUsers(result);
               dispatch(setLoading(false));
             });
         });
     }, []),
   );
 
-  const handleLikeCard = (key: number) => () => {
-    let user = targetUsers.splice(key, 1);
-    console.log(targetUsers);
-    setTargetUsers([...targetUsers]);
+  const handleLikeCard = (key: number) => async (
+    reaction: 'like' | 'dislike',
+  ) => {
+    try {
+      let user = targetUsers.splice(key, 1)[0];
+      if (reaction === 'like') {
+        await relations.doc(user.relationId).update({
+          [user.relationToUpdate]: Relation.like,
+        });
+      } else {
+        await relations.doc(user.relationId).update({
+          [user.relationToUpdate]: Relation.dislike,
+        });
+      }
+
+      setTargetUsers([...targetUsers]);
+    } catch (err) {
+      console.log('while handling like card:', err);
+    }
   };
 
   console.log('reloaded', targetUsers);
