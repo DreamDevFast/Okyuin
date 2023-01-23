@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback} from 'react';
+import React, {useRef, useState, useCallback, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -8,6 +8,7 @@ import {
   PanResponder,
   Animated,
   Image,
+  AppState,
 } from 'react-native';
 import {View, Button, Text} from 'react-native-ui-lib';
 import {Divider, FAB, IconButton} from 'react-native-paper';
@@ -68,6 +69,9 @@ const UserShopSearch = ({navigation, route}: any) => {
   const [targetUsers, setTargetUsers] = useState<Array<any>>([]);
 
   const [state, setState] = useState<Relation>(Relation.initial);
+
+  const appState = useRef(AppState.currentState);
+
   const pan = useRef(new Animated.ValueXY()).current;
   const favoriteValue = Animated.multiply(
     pan.x.interpolate({
@@ -262,6 +266,10 @@ const UserShopSearch = ({navigation, route}: any) => {
               if (matchedPrefs.length) {
                 prefecture_name = matchedPrefs[0].pref;
               }
+              let online = false;
+              if (doc.data().loginState && doc.data().loginState === 'active') {
+                online = true;
+              }
 
               users.push({
                 id: doc.id,
@@ -272,6 +280,7 @@ const UserShopSearch = ({navigation, route}: any) => {
                 low: priceRange.low,
                 hight: priceRange.high,
                 favorite: true,
+                online,
               });
 
               if (users.length === count) return resolve(users);
@@ -370,6 +379,12 @@ const UserShopSearch = ({navigation, route}: any) => {
             if (matchedPrefs.length) {
               prefecture_name = matchedPrefs[0].pref;
             }
+
+            let online = false;
+            if (doc.data().loginState && doc.data().loginState === 'active') {
+              online = true;
+            }
+
             users.push({
               id: doc.id,
               name: doc.data().name,
@@ -379,6 +394,7 @@ const UserShopSearch = ({navigation, route}: any) => {
               low: priceRange.low,
               hight: priceRange.high,
               favorite: false,
+              online,
             });
 
             if (users.length === count) break;
@@ -392,6 +408,9 @@ const UserShopSearch = ({navigation, route}: any) => {
 
   useFocusEffect(
     useCallback(() => {
+      _handleAppStateChange('active');
+      AppState.addEventListener('change', _handleAppStateChange);
+
       fetchUsers(CYCLE_COUNT)
         .then((users: any) => {
           console.log(users);
@@ -405,6 +424,30 @@ const UserShopSearch = ({navigation, route}: any) => {
       };
     }, []),
   );
+
+  const _handleAppStateChange = async (nextAppState: any) => {
+    // console.log(nextAppState);
+    // if (
+    //   appState.current.match(/inactive|background/) &&
+    //   nextAppState === 'active'
+    // ) {
+    //   // TODO SET USERS ONLINE STATUS TO TRUE
+    //   console.log(nextAppState);
+
+    // } else {
+    //   // TODO SET USERS ONLINE STATUS TO FALSE
+    //   console.log(nextAppState);
+    //   users.doc(tempUser.id).update({
+    //     loginState: nextAppState
+    //   })
+    // }
+    await users.doc(tempUser.id).update({
+      loginState: nextAppState,
+      stateChangeDate: new Date(),
+    });
+    appState.current = nextAppState;
+    console.log('AppState', appState.current);
+  };
 
   const getTargetUserFromIndex = async (users: Array<any>, index: number) => {
     let bio = '',
@@ -700,7 +743,17 @@ const UserShopSearch = ({navigation, route}: any) => {
                       )}
 
                       <View style={styles.desc}>
-                        <Text style={styles.title}>{user.name}</Text>
+                        <View row centerV>
+                          <Text style={styles.title}>{user.name}</Text>
+                          {user.online ? (
+                            <>
+                              <View style={styles.onlineMark}></View>
+                              <Text>オンライン中</Text>
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </View>
                         <View row spread>
                           <SimpleLineIcons
                             name="location-pin"
@@ -774,7 +827,17 @@ const UserShopSearch = ({navigation, route}: any) => {
                 >
                   <View bottom style={styles.container}>
                     <View style={styles.desc}>
-                      <Text style={styles.title}>{user.name}</Text>
+                      <View row centerV>
+                        <Text style={styles.title}>{user.name}</Text>
+                        {user.online ? (
+                          <>
+                            <View style={styles.onlineMark}></View>
+                            <Text>オンライン中</Text>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </View>
                       <View row spread>
                         <SimpleLineIcons
                           name="location-pin"
@@ -1023,6 +1086,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: Colors.favorite,
     fontWeight: 'bold',
+  },
+  onlineMark: {
+    marginLeft: 20,
+    width: 10,
+    height: 10,
+    backgroundColor: Colors.green40,
+    borderRadius: 20,
   },
 });
 

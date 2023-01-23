@@ -26,6 +26,7 @@ import AnimationTest from '../screens/AnimationTest';
 import NotificationTest from '../screens/NotificationTest';
 import UserPlan from '../screens/user/Plan.user';
 import UserLikes from '../screens/user/Likes.user';
+import AppStateTest from '../screens/AppStateTest';
 
 // import Login from '../screens/auth/Login';
 // import FirstScreen from '../screens/First';
@@ -48,6 +49,7 @@ const AppNavigator = () => {
         /> */}
         {/* <Stack.Screen name="AnimationTest" component={AnimationTest} /> */}
         {/* <Stack.Screen name="NotificationTest" component={NotificationTest} /> */}
+        {/* <Stack.Screen name="AppStateTest" component={AppStateTest} /> */}
         {isAuthenticated ? (
           <>
             <Stack.Screen name="UserShopSearch" component={UserShopSearch} />
