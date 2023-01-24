@@ -65,12 +65,29 @@ exports.handleMessage = functions.firestore
 
     const payload = {
       notification: {
-        title: `From ${receiver_data.name} To ${sender_data.name}`,
+        title: `おきゅいん`,
         body: text
           ? text.length <= 100
             ? text
             : text.substring(0, 97) + '...'
           : '',
+      },
+      android: {
+        notification: {
+          image:
+            'https://firebasestorage.googleapis.com/v0/b/okyuin-akiba.appspot.com/o/Android.png?alt=media&token=7834b6bd-fba6-45c8-8f3d-5e9ea00da8d1',
+        },
+      },
+      apns: {
+        payload: {
+          aps: {
+            'mutable-content': 1, // 1 or true
+          },
+        },
+        fcm_options: {
+          image:
+            'https://firebasestorage.googleapis.com/v0/b/okyuin-akiba.appspot.com/o/iphone.png?alt=media&token=65513db5-a36a-4b36-9fbb-8340bc8c1075',
+        },
       },
     };
 
@@ -111,7 +128,7 @@ exports.handleSuperLike = functions.firestore
       const text = `${sender_data.name} sent Favorite to ${receiver_data.name}`;
       const payload = {
         notification: {
-          title: `From ${receiver_data.name} To ${sender_data.name}`,
+          title: `おきゅいん`,
           body: text
             ? text.length <= 100
               ? text
@@ -121,6 +138,23 @@ exports.handleSuperLike = functions.firestore
         data: {
           sender_id: relation1 === 3 ? user1 : user2,
           relation_id: snapshot.id,
+        },
+        android: {
+          notification: {
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/okyuin-akiba.appspot.com/o/Android.png?alt=media&token=7834b6bd-fba6-45c8-8f3d-5e9ea00da8d1',
+          },
+        },
+        apns: {
+          payload: {
+            aps: {
+              'mutable-content': 1, // 1 or true
+            },
+          },
+          fcm_options: {
+            image:
+              'https://firebasestorage.googleapis.com/v0/b/okyuin-akiba.appspot.com/o/iphone.png?alt=media&token=65513db5-a36a-4b36-9fbb-8340bc8c1075',
+          },
         },
       };
 
