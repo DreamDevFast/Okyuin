@@ -16,12 +16,18 @@ const Portfolio = (props: any) => {
   return (
     <View padding-5 style={styles.portfolio}>
       <TouchableHighlight onPress={openImagePickerModal}>
-        <Image
-          source={uri === undefined ? userIcon : {uri}}
-          style={styles.thumb_image}
-        />
+        <View style={styles.dashedContainer}>
+          <Image
+            source={uri === undefined ? userIcon : {uri}}
+            style={styles.thumb_image}
+          />
+        </View>
       </TouchableHighlight>
-      {/* <AntDesign name={'plus'} size={10} style={styles.badge} /> */}
+      {uri === undefined ? (
+        <AntDesign name={'plus'} size={25} style={styles.badge} />
+      ) : (
+        <AntDesign name={'edit'} size={25} style={styles.activeBadge} />
+      )}
     </View>
   );
 };
@@ -30,19 +36,39 @@ const styles = StyleSheet.create({
   portfolio: {
     borderRadius: 30,
   },
+  dashedContainer: {
+    borderRadius: 10,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    borderColor: Colors.iconLabel,
+  },
   thumb_image: {
-    height: width * 0.2,
-    width: width * 0.2,
+    height: width * 0.45,
+    width: width * 0.3,
     borderRadius: 10,
   },
   badge: {
+    bottom: 0,
+    right: 0,
     backgroundColor: Colors.redBtn,
-    width: 15,
-    height: 15,
-    borderRadius: 10,
+    width: 30,
+    height: 30,
+    borderRadius: 20,
     padding: 2.5,
     position: 'absolute',
     color: Colors.white,
+    fontWeight: 'bold',
+  },
+  activeBadge: {
+    bottom: 0,
+    right: 0,
+    backgroundColor: Colors.white,
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    padding: 2.5,
+    position: 'absolute',
+    color: Colors.redBtn,
     fontWeight: 'bold',
   },
 });

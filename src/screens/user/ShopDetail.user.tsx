@@ -86,7 +86,8 @@ const UserShopDetail = ({navigation, route}: any) => {
             <Text style={styles.label}>{low}円〜</Text>
           </View>
           <Divider style={styles.divider} />
-          <Text color={Colors.white}>{profile.bio}</Text>
+          <Text color={Colors.black}>{profile.bio}</Text>
+          <View marginB-50></View>
           <View row centerH centerV spread>
             {/* <IconButton
               icon="undo"

@@ -30,6 +30,7 @@ import Loader from '../../components/Loader';
 import {pref_city} from '../../constants/config';
 import CustomIconButton from '../../components/CustomIconButton';
 import FavoriteGradient from '../../components/FavoriteGradient';
+import ForegroundAnimatedView from '../../components/ForegroundAnimatedView';
 
 const defaultImage = require('../../assets/images/empty.jpg');
 const refreshIcon = require('../../assets/icons/refresh-main.png');
@@ -243,12 +244,14 @@ const UserShopSearch = ({navigation, route}: any) => {
               const setting = await settings.doc(doc.id).get();
 
               let bio = '',
-                priceRange = {low: 1500, high: 10000};
+                priceRange = {low: 1500, high: 10000},
+                images = [];
 
               if (profile.exists) {
                 let data = profile.data();
                 if (data !== undefined) {
                   bio = data.bio;
+                  images = data.images;
                 }
               }
 
@@ -281,6 +284,7 @@ const UserShopSearch = ({navigation, route}: any) => {
                 hight: priceRange.high,
                 favorite: true,
                 online,
+                images,
               });
 
               if (users.length === count) return resolve(users);
@@ -310,12 +314,14 @@ const UserShopSearch = ({navigation, route}: any) => {
             const setting = await settings.doc(doc.id).get();
 
             let bio = '',
-              priceRange = {low: 1500, high: 10000};
+              priceRange = {low: 1500, high: 10000},
+              images = [];
 
             if (profile.exists) {
               let data = profile.data();
               if (data !== undefined) {
                 bio = data.bio;
+                images = data.images;
               }
             }
 
@@ -395,6 +401,7 @@ const UserShopSearch = ({navigation, route}: any) => {
               hight: priceRange.high,
               favorite: false,
               online,
+              images,
             });
 
             if (users.length === count) break;
@@ -652,132 +659,15 @@ const UserShopSearch = ({navigation, route}: any) => {
         .map((user, key) => {
           if (key === 1) {
             return (
-              <Animated.View
+              <ForegroundAnimatedView
                 key={key}
-                style={{
-                  ...styles.animated_view,
-                  transform: [
-                    {
-                      translateX: pan.x,
-                    },
-                    {
-                      translateY: pan.y,
-                    },
-                    {
-                      rotateZ: pan.x.interpolate({
-                        inputRange: [-width, 0, width],
-                        outputRange:
-                          direction === 1
-                            ? ['-10deg', '0deg', '10deg']
-                            : ['10deg', '0deg', '-10deg'],
-                      }),
-                    },
-                  ],
-                }}
-                {...panResponder.panHandlers}
-              >
-                <TouchableHighlight
-                  onPress={() =>
-                    navigation.navigate('UserShopDetail', {
-                      ...user,
-                    })
-                  }
-                >
-                  <ImageBackground
-                    source={
-                      user.avatar === 'default.png'
-                        ? defaultImage
-                        : {
-                            uri: user.avatar,
-                          }
-                    }
-                    style={styles.imagebackground}
-                    imageStyle={styles.image}
-                  >
-                    <CustomStamp
-                      text={'like'}
-                      style={{
-                        ...styles.like_stamp,
-                        opacity: pan.x.interpolate({
-                          inputRange: [-width, 0, width],
-                          outputRange: [0, 0, 3],
-                        }),
-                      }}
-                      text_style={styles.like_text}
-                    />
-                    <CustomStamp
-                      text={'dislike'}
-                      style={{
-                        ...styles.dislike_stamp,
-                        opacity: pan.x.interpolate({
-                          inputRange: [-width, 0, width],
-                          outputRange: [3, 0, 0],
-                        }),
-                      }}
-                      text_style={styles.dislike_text}
-                    />
-
-                    <CustomStamp
-                      text={'favorite'}
-                      style={{
-                        ...styles.favorite_stamp,
-                        opacity: favoriteValue.interpolate({
-                          inputRange: [-width, 0, width],
-                          outputRange: [3, 0, 0],
-                        }),
-                      }}
-                      text_style={styles.favorite_text}
-                    />
-                    <View bottom style={styles.container}>
-                      {user.favorite ? (
-                        <View centerH style={styles.favoriteMarkContainer}>
-                          <FavoriteGradient>
-                            <Image
-                              source={favoriteIcon}
-                              style={styles.favoriteMark}
-                            />
-                          </FavoriteGradient>
-                        </View>
-                      ) : (
-                        <></>
-                      )}
-
-                      <View style={styles.desc}>
-                        <View row centerV>
-                          <Text style={styles.title}>{user.name}</Text>
-                          {user.online ? (
-                            <>
-                              <View style={styles.onlineMark}></View>
-                              <Text>オンライン中</Text>
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </View>
-                        <View row spread>
-                          <SimpleLineIcons
-                            name="location-pin"
-                            size={20}
-                            color={Colors.redBtn}
-                          />
-                          <Text style={styles.label}>
-                            {user.prefecture_name}
-                          </Text>
-                          <View style={{width: width * 0.2}}></View>
-                          <MaterialCommunityIcons
-                            name="piggy-bank-outline"
-                            size={20}
-                            color={Colors.redBtn}
-                          />
-                          <Text style={styles.label}>{user.low}円〜</Text>
-                        </View>
-                        <Divider style={styles.divider} />
-                        <Text>{user.bio}</Text>
-                      </View>
-                    </View>
-                  </ImageBackground>
-                </TouchableHighlight>
-              </Animated.View>
+                pan={pan}
+                user={user}
+                direction={direction}
+                panResponder={panResponder}
+                navigation={navigation}
+                favoriteValue={favoriteValue}
+              />
             );
           } else if (key === 0) {
             return (

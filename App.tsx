@@ -15,6 +15,7 @@ import {
   setLoading,
   setTempUser,
   setBackgroundNavigateScreen,
+  setFirstLogin,
 } from './src/redux/features/globalSlice';
 
 import store from './src/redux/store';
@@ -69,6 +70,7 @@ const App = () => {
                 prefecture,
                 role,
                 avatar,
+                isFirstLogin,
               } = querySnapshot.docs[0].data();
 
               birthday = new Date(birthday.seconds * 1000).toString();
@@ -85,6 +87,8 @@ const App = () => {
                   avatar,
                 }),
               );
+              if (isFirstLogin !== undefined && isFirstLogin === false)
+                store.dispatch(setFirstLogin(false));
               return store.dispatch(setAuthenticated(true));
             } else {
               store.dispatch(setLoading(false));
@@ -106,6 +110,7 @@ const App = () => {
                 prefecture,
                 role,
                 avatar,
+                isFirstLogin,
               } = querySnapshot.docs[0].data();
 
               birthday = new Date(birthday.seconds * 1000).toString();
@@ -122,6 +127,9 @@ const App = () => {
                   avatar,
                 }),
               );
+              if (isFirstLogin !== undefined && isFirstLogin === false)
+                store.dispatch(setFirstLogin(false));
+
               return store.dispatch(setAuthenticated(true));
             } else {
               store.dispatch(setLoading(false));

@@ -22,6 +22,7 @@ export type BackgroundNavigateScreen = {
 export interface GlobalState {
   isLoading: boolean;
   isAuthenticated: boolean;
+  isFirstLogin: boolean;
   tempUser: TempUser | undefined;
   loginMethod: 'email' | 'mobile';
   newMatchedUsers: Array<any>;
@@ -32,6 +33,7 @@ export interface GlobalState {
 const initialState: GlobalState = {
   isLoading: true,
   isAuthenticated: false,
+  isFirstLogin: true,
   tempUser: {
     id: '',
     email: '',
@@ -65,6 +67,7 @@ type setTempUserPayload = {
 
 type setLoadingPayload = boolean;
 type setAuthenticatedPayload = boolean;
+type setFirstLogin = boolean;
 type setNewMatchedUsersPayload = Array<any>;
 type setEnteringPayload = boolean;
 type setBackgroundNavigateScreenPayload = BackgroundNavigateScreen;
@@ -90,6 +93,9 @@ export const globalSlice = createSlice({
     ) => {
       state.isAuthenticated = action.payload;
     },
+    setFirstLogin: (state, action: PayloadAction<setFirstLogin>) => {
+      state.isFirstLogin = action.payload;
+    },
     setNewMatchedUsers: (
       state,
       action: PayloadAction<setNewMatchedUsersPayload>,
@@ -113,6 +119,7 @@ export const {
   setLoading,
   setLoginMethod,
   setAuthenticated,
+  setFirstLogin,
   setNewMatchedUsers,
   setEntering,
   setBackgroundNavigateScreen,

@@ -21,6 +21,13 @@ import {
   UserChatRoom,
   PhoneVerification,
   Help,
+  Agreement,
+  UserPhoto,
+  Guide1,
+  Guide2,
+  Guide3,
+  Guide4,
+  Guide5,
 } from '../screens';
 import AnimationTest from '../screens/AnimationTest';
 import NotificationTest from '../screens/NotificationTest';
@@ -34,6 +41,7 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const isAuthenticated = useAppSelector(state => state.global.isAuthenticated);
+  const isFirstLogin = useAppSelector(state => state.global.isFirstLogin);
 
   return (
     <NavigationContainer>
@@ -51,20 +59,45 @@ const AppNavigator = () => {
         {/* <Stack.Screen name="NotificationTest" component={NotificationTest} /> */}
         {/* <Stack.Screen name="AppStateTest" component={AppStateTest} /> */}
         {isAuthenticated ? (
-          <>
-            <Stack.Screen name="UserShopSearch" component={UserShopSearch} />
-            <Stack.Screen name="UserDashBoard" component={UserDashBoard} />
-            <Stack.Screen name="UserSetting" component={UserSetting} />
-            <Stack.Screen name="UserProfile" component={UserProfile} />
-            <Stack.Screen name="UserPlan" component={UserPlan} />
+          isFirstLogin ? (
+            <>
+              <Stack.Screen name="UserAgreement" component={Agreement} />
+              <Stack.Screen name="UserPhoto" component={UserPhoto} />
+              <Stack.Screen name="UserGuide1" component={Guide1} />
+              <Stack.Screen name="UserGuide2" component={Guide2} />
+              <Stack.Screen name="UserGuide3" component={Guide3} />
+              <Stack.Screen name="UserGuide4" component={Guide4} />
+              <Stack.Screen name="UserGuide5" component={Guide5} />
 
-            <Stack.Screen name="UserShopDetail" component={UserShopDetail} />
-            <Stack.Screen name="UserLikes" component={UserLikes} />
+              <Stack.Screen name="UserShopSearch" component={UserShopSearch} />
+              <Stack.Screen name="UserDashBoard" component={UserDashBoard} />
+              <Stack.Screen name="UserSetting" component={UserSetting} />
+              <Stack.Screen name="UserProfile" component={UserProfile} />
+              <Stack.Screen name="UserPlan" component={UserPlan} />
 
-            <Stack.Screen name="UserChat" component={UserChat} />
-            <Stack.Screen name="UserChatRoom" component={UserChatRoom} />
-            <Stack.Screen name="Help" component={Help} />
-          </>
+              <Stack.Screen name="UserShopDetail" component={UserShopDetail} />
+              <Stack.Screen name="UserLikes" component={UserLikes} />
+
+              <Stack.Screen name="UserChat" component={UserChat} />
+              <Stack.Screen name="UserChatRoom" component={UserChatRoom} />
+              <Stack.Screen name="Help" component={Help} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name="UserShopSearch" component={UserShopSearch} />
+              <Stack.Screen name="UserDashBoard" component={UserDashBoard} />
+              <Stack.Screen name="UserSetting" component={UserSetting} />
+              <Stack.Screen name="UserProfile" component={UserProfile} />
+              <Stack.Screen name="UserPlan" component={UserPlan} />
+
+              <Stack.Screen name="UserShopDetail" component={UserShopDetail} />
+              <Stack.Screen name="UserLikes" component={UserLikes} />
+
+              <Stack.Screen name="UserChat" component={UserChat} />
+              <Stack.Screen name="UserChatRoom" component={UserChatRoom} />
+              <Stack.Screen name="Help" component={Help} />
+            </>
+          )
         ) : (
           <>
             <Stack.Screen name="Home" component={FirstScreen} />
