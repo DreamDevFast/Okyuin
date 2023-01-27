@@ -56,8 +56,9 @@ const NameInput = ({navigation}: any) => {
         size={30}
         onPress={() => navigation.goBack()}
       />
+      <CustomText marginB-50>ニックネーム</CustomText>
       <CustomText marginB-50>
-        アプリで表示されるニックネームを入力してください。
+        ニックネームを入力してください。プロフィールに表示されます。登録後は変更出来ませんのでご注意下さい
       </CustomText>
       {error ? (
         <CustomText marginB-10 style={styles.error}>

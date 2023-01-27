@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   StyleSheet,
@@ -26,6 +26,7 @@ const {width, height} = Dimensions.get('window');
 const favoriteIcon = require('../assets/icons/favorite-main.png');
 const defaultImage = require('../assets/images/empty.jpg');
 
+var images = [];
 const ForegroundAnimatedView = ({
   pan,
   user,
@@ -34,7 +35,7 @@ const ForegroundAnimatedView = ({
   navigation,
   favoriteValue,
 }: any) => {
-  const [images, setImages] = useState([user.avatar, ...user.images]);
+  images = [user.avatar, ...user.images];
   const [backImageNum, setBackImageNum] = useState(0);
 
   const handleBackPan = (name: 'prev' | 'next' | 'bottom') => () => {

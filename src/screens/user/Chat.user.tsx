@@ -13,6 +13,8 @@ import Loader from '../../components/Loader';
 import CustomTabnav from '../../components/CustomTabnav';
 import {Colors} from '../../styles';
 
+const userIcon = require('../../assets/images/user.png');
+
 const {width, height} = Dimensions.get('window');
 
 enum Relation {
@@ -102,9 +104,11 @@ const UserChat = ({navigation, route}: any) => {
                 <View row>
                   <Avatar
                     size={50}
-                    source={{
-                      uri: user.avatar,
-                    }}
+                    source={
+                      user.avatar === 'default.png'
+                        ? userIcon
+                        : {uri: user.avatar}
+                    }
                     label={'IMG'}
                     imageStyle={styles.avatar}
                   />

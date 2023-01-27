@@ -50,7 +50,7 @@ export default function UserChatRoom({route, navigation}: any) {
 
       const subscriber = chatmessages.onSnapshot(querySnapshot => {
         console.log('snapshot', _isMounted);
-        if (querySnapshot && _isMounted) {
+        if (querySnapshot) {
           console.log('snapshot entered');
           const docs = querySnapshot.docs.filter(
             doc =>

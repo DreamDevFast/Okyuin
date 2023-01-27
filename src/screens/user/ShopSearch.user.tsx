@@ -209,7 +209,6 @@ const UserShopSearch = ({navigation, route}: any) => {
           // process favorite
           for (let i = 0; i < querySnapshot.docs.length; i++) {
             let doc = querySnapshot.docs[i];
-
             if (
               myReactedRelations.length &&
               myReactedRelations.findIndex(relation => {
@@ -223,6 +222,7 @@ const UserShopSearch = ({navigation, route}: any) => {
               }) !== -1
             )
               continue;
+            console.log(doc.data().name);
 
             const favoriteRelation1 = await relations
               .where('user1', '==', tempUser.id)
@@ -418,6 +418,7 @@ const UserShopSearch = ({navigation, route}: any) => {
       _handleAppStateChange('active');
       AppState.addEventListener('change', _handleAppStateChange);
 
+      dispatch(setLoading(true));
       fetchUsers(CYCLE_COUNT)
         .then((users: any) => {
           console.log(users);

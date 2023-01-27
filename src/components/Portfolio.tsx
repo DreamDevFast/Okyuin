@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   thumb_image: {
     height: width * 0.45,
-    width: width * 0.3,
+    width: width * 0.27,
     borderRadius: 10,
   },
   badge: {

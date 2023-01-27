@@ -14,6 +14,7 @@ import {
   setLoading,
   setLoginMethod,
   setTempUser,
+  setFirstLogin,
 } from '../../redux/features/globalSlice';
 
 import {Container, CustomButton, CustomText} from '../../components';
@@ -68,6 +69,7 @@ const Login = ({navigation}: any) => {
             prefecture,
             role,
             avatar,
+            isFirstLogin,
           } = querySnapshot.docs[0].data();
 
           birthday = new Date(birthday.seconds * 1000).toString();
@@ -88,8 +90,14 @@ const Login = ({navigation}: any) => {
 
           syncStorage.set('token', operator);
           console.log('storage token after login', syncStorage.get('token'));
-          dispatch(setLoading(true));
-          navigation.navigate('UserShopSearch');
+          if (isFirstLogin !== undefined && isFirstLogin === false) {
+            dispatch(setLoading(true));
+            dispatch(setFirstLogin(false));
+
+            navigation.navigate('UserShopSearch');
+          } else {
+            navigation.navigate('UserAgreement');
+          }
         } else {
           dispatch(
             setTempUser({

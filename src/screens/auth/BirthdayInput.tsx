@@ -32,7 +32,10 @@ const BirthdayInput = ({navigation}: any) => {
         size={30}
         onPress={() => navigation.goBack()}
       />
-      <CustomText marginB-30>誕生日を選択してください。</CustomText>
+      <CustomText marginB-30>生年月日</CustomText>
+      <CustomText marginB-30>
+        生年月日を選択してください。登録後は変更出来ませんのでご注意ください。
+      </CustomText>
       <DatePicker
         title={'birthday'}
         date={new Date(tempUser.birthday)}

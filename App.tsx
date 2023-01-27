@@ -93,6 +93,11 @@ const App = () => {
             } else {
               store.dispatch(setLoading(false));
             }
+          })
+          .catch(async err => {
+            console.log(err);
+            await syncStorage.remove('token');
+            store.dispatch(setLoading(false));
           });
       } else if (regForMobile.test(token) === true) {
         users
@@ -134,6 +139,11 @@ const App = () => {
             } else {
               store.dispatch(setLoading(false));
             }
+          })
+          .catch(async err => {
+            console.log(err);
+            await syncStorage.remove('token');
+            store.dispatch(setLoading(false));
           });
       } else {
         store.dispatch(setLoading(false));

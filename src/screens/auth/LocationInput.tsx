@@ -5,6 +5,8 @@ import {TextInput, IconButton} from 'react-native-paper';
 import {Dropdown} from 'react-native-element-dropdown';
 import firestore from '@react-native-firebase/firestore';
 
+import syncStorage from 'sync-storage';
+
 import {pref_city} from '../../constants/config';
 import {Colors} from '../../styles';
 import {Container, CustomButton, CustomText} from '../../components';
@@ -14,6 +16,7 @@ import {setAuthenticated, setTempUser} from '../../redux/features/globalSlice';
 
 const LocationInput = ({navigation}: any) => {
   const tempUser = useAppSelector((state: any) => state.global.tempUser);
+  const loginMethod = useAppSelector((state: any) => state.global.loginMethod);
 
   const dispatch = useAppDispatch();
 
@@ -77,7 +80,9 @@ const LocationInput = ({navigation}: any) => {
       }),
     );
     dispatch(setAuthenticated(true));
-    navigation.navigate('UserDashBoard');
+
+    syncStorage.set('token', loginMethod === 'email' ? email : mobile);
+    navigation.navigate('UserAgreement');
   };
   return (
     <Container bottom centerH>
@@ -154,6 +159,7 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     color: Colors.white,
+    textAlign: 'center',
   },
   placeholderStyle: {
     color: Colors.placeholder,

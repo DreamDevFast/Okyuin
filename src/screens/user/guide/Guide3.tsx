@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableHighlight, Dimensions} from 'react-native';
 import {Container, CustomButton, CustomText} from '../../../components';
 import CustomIconButton from '../../../components/CustomIconButton';
+import {useAppDispatch, useAppSelector} from '../../../redux/reduxHooks';
 
 import {View} from 'react-native-ui-lib';
 
@@ -9,6 +10,13 @@ const likeIcon = require('../../../assets/icons/dislike-main.png');
 const {width, height} = Dimensions.get('window');
 
 const Guide3 = ({navigation}: any) => {
+  const tempUser = useAppSelector((state: any) => state.global.tempUser);
+
+  const handlePress = () => {
+    if (tempUser.role === 'shop') navigation.navigate('UserGuide4');
+    else navigation.navigate('UserGuide5');
+  };
+
   return (
     <Container centerH centerV>
       <CustomText style={styles.header}>うーん…のときは左</CustomText>
@@ -22,7 +30,7 @@ const Guide3 = ({navigation}: any) => {
         <CustomIconButton
           imageSource={likeIcon}
           size={50}
-          onPress={() => navigation.navigate('UserGuide4')}
+          onPress={handlePress}
         />
       </View>
       <TouchableHighlight style={styles.skip}>
