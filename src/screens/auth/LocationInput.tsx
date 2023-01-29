@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View} from 'react-native-ui-lib';
+import {View, Text} from 'react-native-ui-lib';
 import {StyleSheet} from 'react-native';
 import {TextInput, IconButton} from 'react-native-paper';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -13,6 +13,7 @@ import {Container, CustomButton, CustomText} from '../../components';
 
 import {useAppDispatch, useAppSelector} from '../../redux/reduxHooks';
 import {setAuthenticated, setTempUser} from '../../redux/features/globalSlice';
+import CustomProgressBar from '../../components/CustomProgressBar';
 
 const LocationInput = ({navigation}: any) => {
   const tempUser = useAppSelector((state: any) => state.global.tempUser);
@@ -40,52 +41,9 @@ const LocationInput = ({navigation}: any) => {
     );
   };
 
-  const register = async () => {
-    // TODO register user with firestore
-    const {
-      name,
-      birthday,
-      prefecture,
-      address,
-      email,
-      mobile,
-      role,
-      avatar,
-    } = tempUser;
-
-    const documentSnapShot = await users.add({
-      email,
-      mobile,
-      name,
-      birthday: new Date(birthday),
-      prefecture,
-      address,
-      avatar,
-      role,
-      createdAt: new Date(),
-    });
-
-    console.log('save succeeded!', documentSnapShot.id);
-    dispatch(
-      setTempUser({
-        id: documentSnapShot.id,
-        email,
-        mobile,
-        name,
-        birthday: new Date(birthday).toString(),
-        prefecture,
-        address,
-        avatar,
-        role,
-      }),
-    );
-    dispatch(setAuthenticated(true));
-
-    syncStorage.set('token', loginMethod === 'email' ? email : mobile);
-    navigation.navigate('UserAgreement');
-  };
   return (
     <Container bottom centerH>
+      <CustomProgressBar current={0.572} />
       <IconButton
         icon="chevron-left"
         color={Colors.white}
@@ -93,6 +51,8 @@ const LocationInput = ({navigation}: any) => {
         size={30}
         onPress={() => navigation.goBack()}
       />
+      <Text style={styles.title}>居住地</Text>
+      <View style={styles.divider}></View>
       <CustomText marginB-40>住所を入力してください</CustomText>
       <View style={styles.block} marginB-10>
         <Dropdown
@@ -124,7 +84,10 @@ const LocationInput = ({navigation}: any) => {
           onChangeText={handleAddress}
         />
       </View>
-      <CustomButton label="次へ" onPress={register} />
+      <CustomButton
+        label="次へ"
+        onPress={() => navigation.navigate('SearchLocation')}
+      />
       <View marginB-100></View>
     </Container>
   );
@@ -169,6 +132,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#c25f94',
     width: '80%',
     borderRadius: 100,
+  },
+  title: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  divider: {
+    height: '30%',
   },
 });
 

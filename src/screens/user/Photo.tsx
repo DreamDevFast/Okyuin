@@ -25,6 +25,7 @@ import {setTempUser, setLoading} from '../../redux/features/globalSlice';
 
 import {Container, CustomButton, CustomText} from '../../components';
 import {Colors} from '../../styles';
+import CustomProgressBar from '../../components/CustomProgressBar';
 
 type Profile = {
   id: string | undefined;
@@ -185,6 +186,7 @@ const UserPhoto = ({navigation}: any) => {
 
   return (
     <Container>
+      <CustomProgressBar current={0.857} />
       <View centerH>
         <CustomText style={styles.header}>写真を追加</CustomText>
       </View>

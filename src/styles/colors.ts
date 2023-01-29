@@ -11,6 +11,8 @@ const darkMode = {
   favorite: '#ffba49',
   placeholder: '#ffffff99',
   modalBack: '#f377ac',
+  progressBarBack: '#9e9a9988',
+  progressBar: '#eeeeee',
 };
 
 export default darkMode;

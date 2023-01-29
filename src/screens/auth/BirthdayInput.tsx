@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native-ui-lib';
+import {View, Text} from 'react-native-ui-lib';
 import DatePicker from 'react-native-date-picker';
 import {StyleSheet} from 'react-native';
 import {IconButton} from 'react-native-paper';
@@ -9,6 +9,7 @@ import {Container, CustomButton, CustomText} from '../../components';
 
 import {useAppDispatch, useAppSelector} from '../../redux/reduxHooks';
 import {setTempUser} from '../../redux/features/globalSlice';
+import CustomProgressBar from '../../components/CustomProgressBar';
 
 const BirthdayInput = ({navigation}: any) => {
   const tempUser = useAppSelector((state: any) => state.global.tempUser);
@@ -25,6 +26,7 @@ const BirthdayInput = ({navigation}: any) => {
 
   return (
     <Container bottom centerH>
+      <CustomProgressBar current={0.429} />
       <IconButton
         icon="chevron-left"
         color={Colors.white}
@@ -32,7 +34,10 @@ const BirthdayInput = ({navigation}: any) => {
         size={30}
         onPress={() => navigation.goBack()}
       />
-      <CustomText marginB-30>生年月日</CustomText>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>生年月日</Text>
+      </View>
+
       <CustomText marginB-30>
         生年月日を選択してください。登録後は変更出来ませんのでご注意ください。
       </CustomText>
@@ -67,6 +72,20 @@ const styles = StyleSheet.create({
     width: '70%',
     marginBottom: 50,
     backgroundColor: Colors.back,
+  },
+  title: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  titleContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 100,
+    width: '100%',
+    textAlign: 'center',
   },
 });
 

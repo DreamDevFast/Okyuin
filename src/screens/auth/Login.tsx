@@ -129,7 +129,9 @@ const Login = ({navigation}: any) => {
       />
       {loginMethod === 'email' ? (
         <>
-          {/* <CustomText marginB-30>メールアドレスを入力してください</CustomText> */}
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>メールアドレス</Text>
+          </View>
           <TextInput
             underlineColor={Colors.white}
             activeUnderlineColor={Colors.white}
@@ -185,7 +187,9 @@ const Login = ({navigation}: any) => {
         </>
       ) : (
         <>
-          {/* <CustomText marginB-30>電話番号を入力してください</CustomText> */}
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>電話番号</Text>
+          </View>
           <View row>
             {/* <TextInput
               underlineColor={Colors.white}
@@ -280,6 +284,20 @@ const styles = StyleSheet.create({
   },
   error: {
     color: Colors.red10,
+  },
+  title: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  titleContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 100,
+    width: '100%',
+    textAlign: 'center',
   },
 });
 

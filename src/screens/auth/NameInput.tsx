@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native-ui-lib';
+import {View, Text} from 'react-native-ui-lib';
 import {TextInput, IconButton} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
@@ -10,6 +10,7 @@ import {Container, CustomButton, CustomText} from '../../components';
 
 import {useAppDispatch, useAppSelector} from '../../redux/reduxHooks';
 import {setTempUser} from '../../redux/features/globalSlice';
+import CustomProgressBar from '../../components/CustomProgressBar';
 
 const NameInput = ({navigation}: any) => {
   const tempUser = useAppSelector((state: any) => state.global.tempUser);
@@ -49,6 +50,7 @@ const NameInput = ({navigation}: any) => {
   };
   return (
     <Container bottom centerH>
+      <CustomProgressBar current={0.286} />
       <IconButton
         icon="chevron-left"
         color={Colors.white}
@@ -56,7 +58,8 @@ const NameInput = ({navigation}: any) => {
         size={30}
         onPress={() => navigation.goBack()}
       />
-      <CustomText marginB-50>ニックネーム</CustomText>
+      <Text style={styles.title}>ニックネーム</Text>
+      <View style={styles.divider}></View>
       <CustomText marginB-50>
         ニックネームを入力してください。プロフィールに表示されます。登録後は変更出来ませんのでご注意下さい
       </CustomText>
@@ -101,6 +104,16 @@ const styles = StyleSheet.create({
   },
   error: {
     color: Colors.red10,
+  },
+  title: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  divider: {
+    height: '30%',
   },
 });
 

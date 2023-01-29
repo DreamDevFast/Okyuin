@@ -18,6 +18,7 @@ import {Container, CustomButton, CustomText} from '../../components';
 import axios from 'axios';
 
 import Loader from '../../components/Loader';
+import CustomProgressBar from '../../components/CustomProgressBar';
 
 var emailConfirmCodeBaseURL =
   'https://us-central1-okyuin-akiba.cloudfunctions.net/sendMail';
@@ -107,6 +108,7 @@ const Register = ({navigation}: any) => {
   return (
     <Container bottom centerH>
       <Loader isLoading={isLoading} />
+      <CustomProgressBar current={0} />
       <IconButton
         icon="chevron-left"
         color={Colors.white}

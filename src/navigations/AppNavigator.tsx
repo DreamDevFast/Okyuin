@@ -34,6 +34,7 @@ import NotificationTest from '../screens/NotificationTest';
 import UserPlan from '../screens/user/Plan.user';
 import UserLikes from '../screens/user/Likes.user';
 import AppStateTest from '../screens/AppStateTest';
+import SearchLocation from '../screens/auth/SearchLocation';
 
 // import Login from '../screens/auth/Login';
 // import FirstScreen from '../screens/First';
@@ -107,6 +108,7 @@ const AppNavigator = () => {
             <Stack.Screen name="NameInput" component={NameInput} />
             <Stack.Screen name="BirthdayInput" component={BirthdayInput} />
             <Stack.Screen name="LocationInput" component={LocationInput} />
+            <Stack.Screen name="SearchLocation" component={SearchLocation} />
           </>
         )}
       </Stack.Navigator>

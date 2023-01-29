@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native-ui-lib';
-import {StyleSheet, TouchableHighlight} from 'react-native';
+import {StyleSheet, TouchableHighlight, ScrollView} from 'react-native';
 import {TextInput, IconButton} from 'react-native-paper';
 import {
   CodeField,
@@ -11,10 +11,11 @@ import {
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 
-import {setLoading} from '../../redux/features/globalSlice';
+import {setLoading, setResendCount} from '../../redux/features/globalSlice';
 import {useAppDispatch, useAppSelector} from '../../redux/reduxHooks';
 import {Colors} from '../../styles';
 import {Container, CustomButton, CustomText} from '../../components';
+import CustomProgressBar from '../../components/CustomProgressBar';
 
 const CELL_COUNT = 6;
 
@@ -25,6 +26,7 @@ const ConfirmCode = ({navigation, route}: any) => {
   let {code, confirmation, email, mobile} = route.params;
   const dispatch = useAppDispatch();
   const loginMethod = useAppSelector((state: any) => state.global.loginMethod);
+  const resendCount = useAppSelector((state: any) => state.global.resendCount);
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
   const [params, setParams] = useState({
@@ -67,6 +69,7 @@ const ConfirmCode = ({navigation, route}: any) => {
   };
 
   const resendCode = async () => {
+    dispatch(setResendCount(resendCount + 1));
     let resentCode = '',
       resentConfirmation = null;
     if (loginMethod === 'email') {
@@ -116,6 +119,7 @@ const ConfirmCode = ({navigation, route}: any) => {
 
   return (
     <Container bottom centerH>
+      <CustomProgressBar current={0.143} />
       <IconButton
         icon="chevron-left"
         color={Colors.white}
@@ -123,7 +127,8 @@ const ConfirmCode = ({navigation, route}: any) => {
         size={30}
         onPress={() => navigation.goBack()}
       />
-
+      <Text style={styles.title}>認証コード</Text>
+      <View style={styles.divider}></View>
       <CustomText marginB-10>
         {loginMethod === 'email'
           ? '確認のために以下のメールアドレスにメールをお送りいたしました。'
@@ -176,11 +181,15 @@ const ConfirmCode = ({navigation, route}: any) => {
       </View>
 
       <CustomButton label="次へ" disabled={!!!value} onPress={handleConfirm} />
-      <TouchableHighlight onPress={resendCode}>
-        <CustomText marginB-40 marginT-10>
-          認証コードの再送信をリクエストする
-        </CustomText>
-      </TouchableHighlight>
+      {resendCount < 2 ? (
+        <TouchableHighlight onPress={resendCode}>
+          <CustomText marginB-40 marginT-10>
+            認証コードの再送信をリクエストする
+          </CustomText>
+        </TouchableHighlight>
+      ) : (
+        <View marginT-50></View>
+      )}
     </Container>
   );
 };
@@ -227,6 +236,16 @@ const styles = StyleSheet.create({
   error: {
     color: Colors.red10,
     width: '80%',
+  },
+  title: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  divider: {
+    height: '30%',
   },
 });
 

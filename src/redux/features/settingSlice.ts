@@ -41,10 +41,15 @@ type setKeywordPayload = string;
 
 type setPriceRange = Range;
 
+type setIdPayload = string;
+
 export const settingSlice = createSlice({
   name: 'setting',
   initialState,
   reducers: {
+    setId: (state, action: PayloadAction<setIdPayload>) => {
+      state.id = action.payload;
+    },
     setSetting: (state, action: PayloadAction<SettingState>) => {
       const {
         id,
@@ -87,6 +92,7 @@ export const {
   setSearchLocation,
   setKeyword,
   setPriceRange,
+  setId,
 } = settingSlice.actions;
 
 export default settingSlice.reducer;

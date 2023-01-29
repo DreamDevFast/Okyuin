@@ -28,6 +28,7 @@ export interface GlobalState {
   newMatchedUsers: Array<any>;
   isEntering: boolean;
   backgroundNavigateScreen: BackgroundNavigateScreen;
+  resendCount: number;
 }
 
 const initialState: GlobalState = {
@@ -49,6 +50,7 @@ const initialState: GlobalState = {
   newMatchedUsers: [],
   isEntering: true,
   backgroundNavigateScreen: null,
+  resendCount: 0,
 };
 
 type setLoginMethodPayload = 'email' | 'mobile';
@@ -71,6 +73,7 @@ type setFirstLogin = boolean;
 type setNewMatchedUsersPayload = Array<any>;
 type setEnteringPayload = boolean;
 type setBackgroundNavigateScreenPayload = BackgroundNavigateScreen;
+type setresendCountPayload = number;
 
 export const globalSlice = createSlice({
   name: 'global',
@@ -111,6 +114,9 @@ export const globalSlice = createSlice({
     ) => {
       state.backgroundNavigateScreen = action.payload;
     },
+    setResendCount: (state, action: PayloadAction<setresendCountPayload>) => {
+      state.resendCount = action.payload;
+    },
   },
 });
 
@@ -123,6 +129,7 @@ export const {
   setNewMatchedUsers,
   setEntering,
   setBackgroundNavigateScreen,
+  setResendCount,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;
